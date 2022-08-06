@@ -13,16 +13,21 @@ refs.stopBtn.addEventListener('click', onClickStopBtn)
 
 function onClickStartBtn() {
   if (isRunningChange) return;
+  isRunningChange = true;
 
   refs.startBtn.disabled = true;
 
-  intervalId = setInterval(() => {
-    document.body.style.backgroundColor = getRandomHexColor();
-  }, CHANGE_COLOR_INTERVAL)
+  changeBodyColor();
+  intervalId = setInterval(changeBodyColor, CHANGE_COLOR_INTERVAL)
+}
+
+function changeBodyColor() {
+  document.body.style.backgroundColor = getRandomHexColor();
 }
 
 function onClickStopBtn() {
   if (!isRunningChange) return;
+  isRunningChange = false;
 
   clearInterval(intervalId)
   refs.startBtn.disabled = false;
