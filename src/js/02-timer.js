@@ -35,6 +35,7 @@ refs.btn.addEventListener('click', onClickStartBtn);
 
 
 function onClickStartBtn() {
+  setBtnDisabled(true);
   startTimer(currentTime);
 }
 
@@ -61,13 +62,17 @@ function startTimer(ms) {
   currentTime = ms;
   updateTimer(ms);
   intervalId = setInterval(() => {
-    ticTimer();
+    const isFinish = ticTimer();
+
+    if (isFinish) clearInterval(intervalId);
   }, MLS_PER_SECOND);
 }
 
 function ticTimer() {
   currentTime -= MLS_PER_SECOND;
+  if (currentTime <= 0) return true;
   updateTimer(currentTime);
+  return false;
 }
 
 function updateTimer(ms) {
